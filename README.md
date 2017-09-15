@@ -1,0 +1,1 @@
+This script responds to 'dashbord' (ui) requests with data, gathered from servers with 'sysinfo' script installed.
