@@ -11,14 +11,15 @@ app.config['SECRET_KEY'] = 'secret!'
 
 @app.route('/cluster_info')
 def cluster_info():
-    urls = config.SERVERS_LIST
-    shells = (grequests.get(u) for u in urls)
-    responses = grequests.map(shells)
+    clusters = config.CLUSTERS_LIST
     result = {}
-    for r in responses:
-        result[r.url] = {'status': r.status_code, 'text': r.text}
-    return jsonify({'result': result})
-
+    for k in clusters:
+        result[k] = {}
+        shells = (grequests.get(server) for server in clusters[k])
+        responses = grequests.map(shells)
+        for r in responses:
+            result[k][r.url] = {'status': r.status_code, 'text': r.text}
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=False, port=5500, host='0.0.0.0')
