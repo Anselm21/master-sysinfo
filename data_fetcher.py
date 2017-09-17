@@ -23,5 +23,5 @@ class DataFetcher:
                 except:
                     pass
             for failed in self.failed_servers:
-                result[failed] = {'status': self.failed_servers[failed]}
+                result[failed] = {'text': self.failed_servers[failed], 'status': 500}
             return result

@@ -14,8 +14,10 @@ def cluster_info():
     clusters = config.CLUSTERS_LIST
     result = {}
     for k in clusters:
-        data_fetcher = DataFetcher(clusters[k])
-        result[k] = data_fetcher.get_info()
+        result[k] = {}
+        data_fetcher = DataFetcher(clusters[k]['servers'])
+        result[k]['sysinfo'] = data_fetcher.get_info()
+        result[k].update({'description': clusters[k]['description']})
     return jsonify(result)
 
 if __name__ == '__main__':
